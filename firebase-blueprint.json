@@ -1,0 +1,131 @@
+{
+  "entities": {
+    "userProfile": {
+      "title": "UserProfile",
+      "description": "User profile document containing authentication info and preferences.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The user's unique Firebase UID."
+        },
+        "email": {
+          "type": "string",
+          "description": "User email address."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "User display name."
+        },
+        "photoURL": {
+          "type": "string",
+          "description": "User avatar URL."
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "ISO timestamp of user registration."
+        }
+      },
+      "required": ["id", "email"]
+    },
+    "task": {
+      "title": "Task",
+      "description": "Individual task item created or scheduled by the user.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Task identifier."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner user ID."
+        },
+        "title": {
+          "type": "string",
+          "description": "Task title."
+        },
+        "category": {
+          "type": "string",
+          "enum": ["Study", "Personal", "Work", "Health"]
+        },
+        "priority": {
+          "type": "string",
+          "enum": ["High", "Medium", "Low"]
+        },
+        "durationMinutes": {
+          "type": "number",
+          "description": "Estimated or planned duration in minutes."
+        },
+        "scheduledTime": {
+          "type": "string",
+          "description": "Scheduled time string, e.g. 09:00"
+        },
+        "deadlineLabel": {
+          "type": "string",
+          "description": "Deadline indicator, e.g. Tomorrow"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "in_progress", "completed", "deferred"]
+        },
+        "reasoning": {
+          "type": "string",
+          "description": "Explanation of scheduling decisions."
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      },
+      "required": ["id", "userId", "title", "category", "priority", "status"]
+    },
+    "chatSession": {
+      "title": "ChatSession",
+      "description": "Multi-turn Gemini chat conversation thread.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Session identifier."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Owner user ID."
+        },
+        "persona": {
+          "type": "string",
+          "description": "Role / persona mode of the assistant."
+        },
+        "model": {
+          "type": "string",
+          "description": "Gemini model used."
+        },
+        "title": {
+          "type": "string",
+          "description": "Conversation topic."
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      },
+      "required": ["id", "userId", "persona", "model"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/userProfile" },
+      "description": "Private user profile document."
+    },
+    "/users/{userId}/tasks/{taskId}": {
+      "schema": { "$ref": "#/entities/task" },
+      "description": "User task collection for scheduling and progress tracking."
+    },
+    "/users/{userId}/chats/{chatId}": {
+      "schema": { "$ref": "#/entities/chatSession" },
+      "description": "User multi-turn chat threads."
+    }
+  }
+}

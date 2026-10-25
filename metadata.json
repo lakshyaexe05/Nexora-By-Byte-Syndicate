@@ -1,0 +1,6 @@
+{
+  "name": "NEXORA by BYTE SYNDICATE",
+  "description": "Intelligent everyday-life planning assistant that transforms overwhelming tasks, competing priorities, and changing schedules into personalized, actionable plans.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
